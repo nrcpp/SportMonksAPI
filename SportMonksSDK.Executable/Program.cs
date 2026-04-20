@@ -112,8 +112,8 @@ namespace SportMonksSDK.Executable
             //    Console.WriteLine(item.name);
 
 
-            var r2 = ac.ByID(2).Result;     // poland
-            var r3 = ac.Search("united").Result;
+            var r2 = ac.GetCountryById(2).Result;     // poland
+            var r3 = ac.SearchCountries("united").Result;
 
             Console.WriteLine(r2.data);
             Console.WriteLine(r3.data.Count());

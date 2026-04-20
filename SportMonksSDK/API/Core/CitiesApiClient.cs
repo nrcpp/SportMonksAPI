@@ -9,7 +9,7 @@ namespace SportMonksSDK.API.Core
                 endpointPart: "core/cities",
                 parametersPart: parametersPart
             );
-        public async Task<CityResponse?> GetCityById(string cityId)
+        public async Task<CityResponse?> GetCityById(int cityId)
             => await base.GetSingle<CityResponse>(
                 endpointPart: $"core/cities/{cityId}",
                 include: "includes=region"

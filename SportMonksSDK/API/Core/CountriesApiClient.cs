@@ -1,57 +1,34 @@
 using SportMonksSDK.API.Core.Entities;
 
-namespace SportMonksSDK;
-
-
-// API client
-public class CountriesApiClient : BaseApiClient
+namespace SportMonksSDK.API.Core
 {
-    // 
-    public async Task<AllCountriesResponse> All()
+    public class CountriesApiClient : BaseApiClient
     {
-        return await base.GetAll<AllCountriesResponse, Country>("core/countries",
-                                                                    parametersPart: Constants.Filter_1000_Per_Page);
+        public async Task<AllCountriesResponse?> GetAllCountries(string parametersPart = "filters=populate")
+            => await base.GetAll<AllCountriesResponse, Country>(
+                endpointPart: "core/countries",
+                parametersPart: parametersPart
+            );
+
+        public async Task<CountryResponse?> GetCountryById(int countryId)
+            => await base.GetSingle<CountryResponse>(
+                endpointPart: $"core/countries/{countryId}"
+            );
+
+        public async Task<AllCountriesResponse?> SearchCountries(string name)
+            => await base.GetAll<AllCountriesResponse, Country>(
+                endpointPart: $"core/countries/search/{name}",
+                parametersPart: ""
+            );
     }
 
-    /// 
-    /// <param name="countryId">
-    /// The ID of the country you want to retrieve.
-    /// </param>
-    public async Task<CountryReponse> ByID(int countryId)
+    #region Models
+    public class AllCountriesResponse : ListResponse<Country>
     {
-        return await base.GetSingle<CountryReponse>($"core/countries/{countryId}");        
     }
-
-
-    /// <param name="version">
-    /// The version of the API.
-    /// </param>
-    /// <param name="name">
-    /// The name you want to search on
-    /// </param>
-    public async Task<AllCountriesResponse> Search(string name)
+    public class CountryResponse : SingleResponse<Country>
     {
-        return await base.GetAll<AllCountriesResponse, Country>($"core/countries/search/{name}", parametersPart: "");
     }
+    #endregion
 }
-
-
-
-#region Models
-
-
-public class AllCountriesResponse : ListResponse<Country>
-{
-   
-}
-
-public class CountryReponse : SingleResponse<Country>
-{    
-}
-
-
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-
-
-#endregion      // countries
 
