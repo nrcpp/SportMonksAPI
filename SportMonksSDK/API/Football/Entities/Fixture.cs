@@ -35,6 +35,15 @@ namespace SportMonksSDK.API.Football.Entities
         public List<Participant>? participants { get; set; } = [];
         public List<ScoreParent>? scores { get; set; } = [];
         public List<Coach> coaches { get; set; } = [];
-        public List<Referee> referees { get; set; } = [];
+        public List<FixtureReferee> referees { get; set; } = [];
+    }
+
+    // fixture-level referee assignment; NOT the full Referee profile (see RefereesApiClient for that)
+    public class FixtureReferee
+    {
+        public int id { get; set; }
+        public int? fixture_id { get; set; }
+        public int? referee_id { get; set; }
+        public int? type_id { get; set; }
     }
 }

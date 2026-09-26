@@ -14,8 +14,8 @@ namespace SportMonksSDK.API.Football.Entities
         public int? nationality_id { get; set; }
         public int? city_id { get; set; }
         public string? common_name { get; set; }
-        public string? first_name { get; set; }
-        public string? last_name { get; set; }
+        public string? firstname { get; set; }
+        public string? lastname { get; set; }
         public string? name { get; set; }
         public string display_name { get; set; }
         public string? image_path { get; set; }
@@ -23,6 +23,15 @@ namespace SportMonksSDK.API.Football.Entities
         public double? weight { get; set; }
         public string? date_of_birth { get; set; }
         public string? gender { get; set; }
+        public CoachMeta? meta { get; set; }
         public List<Fixture> fixtures { get; set; } = [];
+    }
+
+    // present only when a Coach is nested under Fixture.coaches
+    public class CoachMeta
+    {
+        public int? fixture_id { get; set; }
+        public int? coach_id { get; set; }
+        public int? participant_id { get; set; }
     }
 }

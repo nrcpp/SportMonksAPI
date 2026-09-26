@@ -3,9 +3,9 @@
     public class PremiumOdd
     {
         public int id { get; set; }
-        public int? fixtureId { get; set; }
+        public int? fixture_id { get; set; }
         public Fixture fixture { get; set; }
-        public int? marketId { get; set; }
+        public int? market_id { get; set; }
         public Market market { get; set; }
         public int? bookmaker_id { get; set; }
         public Bookmaker bookmaker { get; set; }

@@ -17,6 +17,8 @@ namespace SportMonksSDK.API.Football.Entities
         public string? standing_method { get; set; }
         public string? starting_at { get; set; }
         public string? ending_at { get; set; }
+        public string? standings_recalculated_at { get; set; }
+        public bool? games_in_current_week { get; set; }
         public List<Team> teams { get; set; } = [];
         public List<Stage> stages { get; set; } = [];
         public List<Fixture> fixtures { get; set; } = [];

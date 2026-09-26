@@ -4,7 +4,7 @@ namespace SportMonksSDK.API.Football
 {
     public class StatisticsApiClient : BaseApiClient
     {
-        public async Task<AllSeasonPlayerStatisticsResponse> GetAllSeasonPlayerStatisticsResponse(string playerId, string parametersPart = "includes=player;")
+        public async Task<AllSeasonPlayerStatisticsResponse> GetAllSeasonPlayerStatisticsResponse(string playerId, string parametersPart = "include=player;")
         => await GetAll<AllSeasonPlayerStatisticsResponse, PlayerStatistic>(
             endpointPart: $"football/statistics/seasons/{ParticipantType.Players}/{playerId}",
             parametersPart: parametersPart
@@ -20,6 +20,8 @@ namespace SportMonksSDK.API.Football
         public int? jersey_number { get; set; }
         public int? position_id { get; set; }
         public int? season_id { get; set; }
+        public bool? has_values { get; set; }
+        public List<StatisticDetail>? details { get; set; }
     }
 
     public class AllSeasonPlayerStatisticsResponse : ListResponse<PlayerStatistic>

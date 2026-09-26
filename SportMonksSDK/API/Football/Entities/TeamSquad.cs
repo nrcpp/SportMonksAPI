@@ -9,6 +9,7 @@
         public int? position_id { get; set; }
         public int? detailed_position_id { get; set; }
         public int? jersey_number { get; set; }
+        public bool? captain { get; set; }
         public string? start { get; set; }
         public string? end { get; set; }
     }

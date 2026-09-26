@@ -4,7 +4,7 @@ namespace SportMonksSDK.API.Core
 {
     public class ContinentsApiClient : BaseApiClient
     {
-        public async Task<AllContinentsResponse?> GetAllContinents(string parametersPart = "includes=countries")
+        public async Task<AllContinentsResponse?> GetAllContinents(string parametersPart = "include=countries")
             => await base.GetAll<AllContinentsResponse, Continent>(
                 endpointPart: "core/continents",
                 parametersPart: parametersPart
@@ -12,7 +12,7 @@ namespace SportMonksSDK.API.Core
         public async Task<ContinentResponse?> GetContinentById(int continentId)
             => await base.GetSingle<ContinentResponse>(
                 endpointPart: $"core/continents/{continentId}",
-                include: "includes=countries"
+                include: "include=countries"
             );
     }
 

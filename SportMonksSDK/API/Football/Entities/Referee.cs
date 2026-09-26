@@ -10,7 +10,7 @@ namespace SportMonksSDK.API.Football.Entities
         public int? country_id { get; set; }
         public Country country { get; set; }
         public int? nationality_id { get; set; }
-        public string? city_id { get; set; }
+        public int? city_id { get; set; }
         public City city { get; set; }
         public string? common_name { get; set; }
         public string? firstname { get; set; }

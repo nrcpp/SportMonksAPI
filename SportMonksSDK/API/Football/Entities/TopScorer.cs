@@ -2,6 +2,8 @@
 {
     public class TopScorer
     {
+        public int id { get; set; }
+        public int? season_id { get; set; }
         public int? stage_id { get; set; }
         public int? player_id { get; set; }
         public int? type_id { get; set; }

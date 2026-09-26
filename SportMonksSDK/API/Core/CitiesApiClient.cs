@@ -4,7 +4,7 @@ namespace SportMonksSDK.API.Core
 {
     public class CitiesApiClient : BaseApiClient
     {
-        public async Task<AllCitiesResponse?> GetAllCities(string parametersPart = "includes=region")
+        public async Task<AllCitiesResponse?> GetAllCities(string parametersPart = "include=region")
             => await base.GetAll<AllCitiesResponse, City>(
                 endpointPart: "core/cities",
                 parametersPart: parametersPart
@@ -12,7 +12,7 @@ namespace SportMonksSDK.API.Core
         public async Task<CityResponse?> GetCityById(int cityId)
             => await base.GetSingle<CityResponse>(
                 endpointPart: $"core/cities/{cityId}",
-                include: "includes=region"
+                include: "include=region"
             );
     }
 

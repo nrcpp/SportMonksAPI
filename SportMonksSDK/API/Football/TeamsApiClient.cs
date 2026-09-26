@@ -4,7 +4,7 @@ namespace SportMonksSDK.API.Football
 {
     public class TeamsApiClient : BaseApiClient
     {
-        public async Task<AllTeamsResponse?> GetAllTeams(string parametersPart = "includes=seasons;players;coaches;venue;country;sport;")
+        public async Task<AllTeamsResponse?> GetAllTeams(string parametersPart = "include=seasons;players;coaches;venue;country;sport;")
             => await GetAll<AllTeamsResponse, Team>(
                 endpointPart: "football/teams",
                 parametersPart: parametersPart
@@ -12,7 +12,7 @@ namespace SportMonksSDK.API.Football
         public async Task<TeamResponse?> GetTeamById(string id)
         => await GetSingle<TeamResponse>(
             endpointPart: $"football/teams/{id}",
-            include: "includes=seasons;players;coaches;venue;country;sport;"
+            include: "include=seasons;players;coaches;venue;country;sport;"
             );
     }
 
