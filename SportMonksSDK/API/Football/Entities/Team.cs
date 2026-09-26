@@ -21,7 +21,9 @@ namespace SportMonksSDK.API.Football.Entities
         public string? last_played_at { get; set; }
         public TeamMeta? meta { get; set; }
         public List<Season> seasons { get; set; } = [];
-        public List<Player> players { get; set; } = [];
+        // Real JSON: a squad-membership join row (id, player_id, position_id, start, end, captain, ...)
+        // with a nested `player` object, NOT a plain list of Player.
+        public List<Squad> players { get; set; } = [];
         public List<Coach> coaches { get; set; } = [];
     }
 

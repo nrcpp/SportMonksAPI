@@ -9,6 +9,12 @@ namespace SportMonksSDK.API.Football
                 endpointPart: "football/standings",
                 parametersPart: parametersPart
                 );
+
+        public async Task<AllStandingsResponse?> GetAllStandingsBySeasonId(string seasonId, string parametersPart = "include=participant;details.type;")
+            => await GetAll<AllStandingsResponse, Standing>(
+                endpointPart: $"football/standings/seasons/{seasonId}",
+                parametersPart: parametersPart
+                );
     }
 
     #region Models
