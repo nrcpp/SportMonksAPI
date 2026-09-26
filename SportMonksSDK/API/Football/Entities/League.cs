@@ -16,6 +16,7 @@ namespace SportMonksSDK.API.Football.Entities
         public string? type { get; set; }
         public string? sub_type { get; set; }
         public string? last_played_at { get; set; }
+        public Season? currentseason { get; set; }
         public List<Season> seasons { get; set; } = [];
         public List<Stage> stages { get; set; } = [];
     }

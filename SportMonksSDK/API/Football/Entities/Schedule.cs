@@ -13,12 +13,13 @@ namespace SportMonksSDK.API.Football.Entities
         public Season season { get; set; }
         public int? type_id { get; set; }
         public string? name { get; set; }
+        public int? sort_order { get; set; }
         public bool? finished { get; set; }
         public bool? is_current { get; set; }
         public string? starting_at { get; set; }
         public string? ending_at { get; set; }
         public bool? games_in_current_week { get; set; }
         public int? tie_breaker_rule_id { get; set; }
-        public List<Round> Rounds { get; set; } = [];
+        public List<Round> rounds { get; set; } = [];
     }
 }

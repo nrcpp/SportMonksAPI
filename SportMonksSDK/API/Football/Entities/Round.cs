@@ -19,6 +19,6 @@ namespace SportMonksSDK.API.Football.Entities
         public bool? is_current { get; set; }
         public string? starting_at { get; set; }
         public string? ending_at { get; set; }
-        public List<Fixture>? Fixtures { get; set; } = [];
+        public List<Fixture>? fixtures { get; set; } = [];
     }
 }

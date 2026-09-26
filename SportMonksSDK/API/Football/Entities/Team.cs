@@ -28,7 +28,7 @@ namespace SportMonksSDK.API.Football.Entities
     public class TeamMeta
     {
         public string? location { get; set; }
-        public string? winner { get; set; }
+        public bool? winner { get; set; }
         public int? position { get; set; }
     }
 }

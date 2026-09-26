@@ -4,7 +4,11 @@ namespace SportMonksSDK;
 
 public class BaseApiClient : IDisposable
 {
-    public readonly string apiKey = "";        // put your SportMonks API key here 
+    // Allows host applications (DI/configuration driven) to supply the API token without
+    // relying on the token.txt file convention. Set once at startup before any client is created.
+    public static string? OverrideApiToken { get; set; }
+
+    public string apiKey = "";        // put your SportMonks API key here 
     public const string baseUrl = "api.sportmonks.com";
     public const string version = "v3";
     public const int maxAllRecords = int.MaxValue;
@@ -14,6 +18,9 @@ public class BaseApiClient : IDisposable
     
     public BaseApiClient()
     {
+        if (!string.IsNullOrWhiteSpace(OverrideApiToken))
+            apiKey = OverrideApiToken;
+
         if (apiKey?.Length < 5 && File.Exists("token.txt"))
             apiKey = File.ReadAllText("token.txt");         // for debugging purposes
 
@@ -167,7 +174,7 @@ public class RateLimit
 
 public class Subscription
 {
-    public List<object> meta { get; set; }
+    public object? meta { get; set; }
     public List<Plan> plans { get; set; }
     public List<object> add_ons { get; set; }
     public List<object> widgets { get; set; }

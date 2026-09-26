@@ -12,6 +12,11 @@ namespace SportMonksSDK.API.Football.Entities
         public string? name { get; set; }
         public string? short_code { get; set; }
         public string? image_path { get; set; }
+        public int? founded { get; set; }
+        public string? type { get; set; }
+        public bool? placeholder { get; set; }
+        public string? last_played_at { get; set; }
+        public TeamMeta? meta { get; set; }
         public Venue venue { get; set; }
         public Sport sport { get; set; }
     }
