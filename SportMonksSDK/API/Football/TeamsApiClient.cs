@@ -14,6 +14,14 @@ namespace SportMonksSDK.API.Football
             endpointPart: $"football/teams/{id}",
             include: include
             );
+
+        // Every team of one season with that season's statistics in a single request
+        // (verified live: 22 teams, no pagination with per_page=50).
+        public async Task<AllTeamsResponse?> GetTeamsWithSeasonStatisticsBySeasonId(string seasonId)
+            => await GetAll<AllTeamsResponse, Team>(
+                endpointPart: $"football/teams/seasons/{seasonId}",
+                parametersPart: $"include=statistics.details&filters=teamStatisticSeasons:{seasonId}&per_page=50"
+                );
     }
 
     #region Models

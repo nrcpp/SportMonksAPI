@@ -25,6 +25,7 @@ namespace SportMonksSDK.API.Football.Entities
         // with a nested `player` object, NOT a plain list of Player.
         public List<Squad> players { get; set; } = [];
         public List<Coach> coaches { get; set; } = [];
+        public List<TeamStatistic>? statistics { get; set; }
     }
 
     public class TeamMeta

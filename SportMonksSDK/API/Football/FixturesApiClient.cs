@@ -10,11 +10,23 @@ namespace SportMonksSDK.API.Football
                 parametersPart: parametersPart
                 );
 
-        public async Task<FixtureResponse?> GetFixtureById(string id)
+        public async Task<FixtureResponse?> GetFixtureById(
+            string id,
+            string include = "include=participants;scores;coaches;referees;venue;sport;league;season;stage;aggregate;state;round;")
         => await GetSingle<FixtureResponse>(
             endpointPart: $"football/fixtures/{id}",
-            include: "include=participants;scores;coaches;referees;venue;sport;league;season;stage;aggregate;state;round;"
+            include: include
             );
+
+        // GET Fixtures by Multiple IDs: at most 50 ids per request (Sportmonks limit).
+        public async Task<AllFixturesResponse?> GetFixturesByMultipleIds(IReadOnlyCollection<int> ids, string parametersPart = "include=participants;scores")
+        {
+            if (ids.Count is 0 or > 50)
+                throw new ArgumentOutOfRangeException(nameof(ids), ids.Count, "Sportmonks multi-fixture endpoint accepts 1..50 ids.");
+            return await GetAll<AllFixturesResponse, Fixture>(
+                endpointPart: $"football/fixtures/multi/{string.Join(',', ids)}",
+                parametersPart: parametersPart);
+        }
 
         // yyyy-mm-dd
         public async Task<AllFixturesResponse?> GetFixturesByDate(string date, string parametersPart = "include=participants;scores;coaches;referees;venue;sport;league;season;stage;aggregate;state;round;")

@@ -8,6 +8,13 @@ public class BaseApiClient : IDisposable
     // relying on the token.txt file convention. Set once at startup before any client is created.
     public static string? OverrideApiToken { get; set; }
 
+    // Host-supplied handler (rate-limit pacing, timeouts, bounded retries). When set, the SDK's own
+    // silent 429 retry loop is bypassed and the handler is responsible for retries.
+    public static HttpMessageHandler? SharedHandler { get; set; }
+
+    // Host-supplied API root (e.g. a mock Sportmonks server). Defaults to https://api.sportmonks.com/.
+    public static string? OverrideBaseUrl { get; set; }
+
     public string apiKey = "";        // put your SportMonks API key here 
     public const string baseUrl = "api.sportmonks.com";
     public const string version = "v3";
@@ -28,8 +35,10 @@ public class BaseApiClient : IDisposable
             throw new InvalidOperationException("SportMonkns API Key not set. Go to https://my.sportmonks.com/api/tokens");
 
 
-        _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri($"https://{baseUrl}/");
+        _httpClient = SharedHandler is null
+            ? new HttpClient()
+            : new HttpClient(SharedHandler, disposeHandler: false) { Timeout = Timeout.InfiniteTimeSpan };
+        _httpClient.BaseAddress = new Uri(string.IsNullOrWhiteSpace(OverrideBaseUrl) ? $"https://{baseUrl}/" : OverrideBaseUrl.TrimEnd('/') + "/");
 
         _httpClient.DefaultRequestHeaders.Add($"Authorization", apiKey);   
     }
@@ -59,8 +68,7 @@ public class BaseApiClient : IDisposable
 
             if (!string.IsNullOrWhiteSpace(parametersPart)) fullEndpoint += '&' + parametersPart;
             
-            var response = await _httpClient.GetAsync(fullEndpoint);     // e.g. v3/core/countries
-            response.EnsureSuccessStatusCode();
+            var response = await GetWithRetryAsync(fullEndpoint);     // e.g. v3/core/countries
 
             var responseContent = await response.Content.ReadAsStreamAsync();
             // using (var reader = new StreamReader(responseContent))
@@ -122,8 +130,7 @@ public class BaseApiClient : IDisposable
         if (!string.IsNullOrWhiteSpace(fields)) fullEndpoint += '&' + fields;
 
 
-        var response = await _httpClient.GetAsync(fullEndpoint);     // e.g. v3/core/countries
-        response.EnsureSuccessStatusCode();
+        var response = await GetWithRetryAsync(fullEndpoint);     // e.g. v3/core/countries
 
         var responseContent = await response.Content.ReadAsStreamAsync();
         // using (var reader = new StreamReader(responseContent))
@@ -133,6 +140,29 @@ public class BaseApiClient : IDisposable
         T? responseObj = await JsonSerializer.DeserializeAsync<T>(responseContent);
 
         return responseObj;
+    }
+
+    /// <summary>
+    /// Issues a GET request, transparently retrying with backoff on HTTP 429 (Too Many Requests)
+    /// responses. Honors the Retry-After header when present, falling back to exponential backoff.
+    /// Throws (via EnsureSuccessStatusCode) if the request still fails after all retries.
+    /// </summary>
+    private async Task<HttpResponseMessage> GetWithRetryAsync(string fullEndpoint, int maxAttempts = 5)
+    {
+        for (int attempt = 1; ; attempt++)
+        {
+            var response = await _httpClient.GetAsync(fullEndpoint);
+
+            if (SharedHandler is not null || response.StatusCode != System.Net.HttpStatusCode.TooManyRequests || attempt >= maxAttempts)
+            {
+                response.EnsureSuccessStatusCode();
+                return response;
+            }
+
+            var delay = response.Headers.RetryAfter?.Delta
+                ?? TimeSpan.FromSeconds(Math.Pow(2, attempt));
+            await Task.Delay(delay);
+        }
     }
 
 

@@ -15,6 +15,15 @@ namespace SportMonksSDK.API.Football
             endpointPart: $"football/squads/seasons/{seasonId}/teams/{teamId}",
             parametersPart: parametersPart
             );
+
+        // Same endpoint with `include=details`: returns one PlayerStatistic row (with season stat
+        // details) per squad player - the per-team replacement for per-player season statistics.
+        public async Task<AllSeasonPlayerStatisticsResponse?> GetSquadPlayerStatisticsBySeasonAndTeamId(
+            string seasonId, string teamId, string parametersPart = "include=details;player")
+        => await GetAll<AllSeasonPlayerStatisticsResponse, PlayerStatistic>(
+            endpointPart: $"football/squads/seasons/{seasonId}/teams/{teamId}",
+            parametersPart: parametersPart
+            );
     }
 
     #region Models
