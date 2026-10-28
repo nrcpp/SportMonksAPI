@@ -4,7 +4,7 @@ namespace SportMonksSDK.API.Football
 {
     public class VenueApiClient : BaseApiClient
     {
-        public async Task<AllVenuesResponse?> GetAllVenues(string parametersPart = "includes=country;city;fixtures;")
+        public async Task<AllVenuesResponse?> GetAllVenues(string parametersPart = "include=country;city;fixtures;")
             => await GetAll<AllVenuesResponse, Venue>(
                 endpointPart: "football/venues",
                 parametersPart: parametersPart
@@ -12,7 +12,7 @@ namespace SportMonksSDK.API.Football
         public async Task<VenueResponse?> GetVenueById(string id)
         => await GetSingle<VenueResponse>(
             endpointPart: $"football/venues/{id}",
-            include: "includes=country;city;fixtures;"
+            include: "include=country;city;fixtures;"
             );
     }
 

@@ -9,10 +9,10 @@ namespace SportMonksSDK.API.Football
                 endpointPart: "football/players",
                 parametersPart: parametersPart
                 );
-        public async Task<PlayerResponse?> GetPlayerById(string id)
+        public async Task<PlayerResponse?> GetPlayerById(string id, string include = "include=sport;country;city;nationality;")
         => await GetSingle<PlayerResponse>(
             endpointPart: $"football/players/{id}",
-            include: "include=sport;country;city;"
+            include: include
             );
     }
 

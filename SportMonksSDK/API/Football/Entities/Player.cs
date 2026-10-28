@@ -11,6 +11,7 @@ namespace SportMonksSDK.API.Football.Entities
         public int? country_id { get; set; }
         public Country country { get; set; }
         public int? nationality_id { get; set; }
+        public Country? nationality { get; set; }
         public int? city_id { get; set; }
         public City city { get; set; }
         public int? position_id { get; set; }
@@ -18,8 +19,8 @@ namespace SportMonksSDK.API.Football.Entities
         public int? type_id { get; set; }
         public Type type { get; set; }
         public string? common_name { get; set; }
-        public string? first_name { get; set; }
-        public string? last_name { get; set; }
+        public string? firstname { get; set; }
+        public string? lastname { get; set; }
         public string? name { get; set; }
         public string display_name { get; set; }
         public string? image_path { get; set; }

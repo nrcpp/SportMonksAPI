@@ -19,6 +19,8 @@ namespace SportMonksSDK.API.Football.Entities
         public bool? is_current { get; set; }
         public string? starting_at { get; set; }
         public string? ending_at { get; set; }
+        public bool? games_in_current_week { get; set; }
+        public int? tie_breaker_rule_id { get; set; }
         public List<Fixture> fixtures { get; set; }
         public List<Aggregate> aggregates { get; set; }
         public List<TopScorer> topscorers { get; set; }

@@ -7,6 +7,7 @@ namespace SportMonksSDK.API.Football.Entities
         public int id { get; set; }
         public int? country_id { get; set; }
         public Country country { get; set; }
+        public int? city_id { get; set; }
         public string? name { get; set; }
         public string? address { get; set; }
         public string? zipcode { get; set; }

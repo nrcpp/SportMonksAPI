@@ -23,5 +23,28 @@ namespace SportMonksSDK.API.Football.Entities
         public int? position { get; set; }
         public string? result { get; set; }
         public int? points { get; set; }
+        // Per-metric breakdown (played/won/goals-for/home-away splits/...); keyed by `type.developer_name`,
+        // NOT by array order - real payload order is not a stable contract.
+        public List<StandingDetail>? details { get; set; }
+    }
+
+    public class StandingDetail
+    {
+        public long id { get; set; }
+        public string? standing_type { get; set; }
+        public long? standing_id { get; set; }
+        public int? type_id { get; set; }
+        public double? value { get; set; }
+        public StandingDetailType? type { get; set; }
+    }
+
+    public class StandingDetailType
+    {
+        public int id { get; set; }
+        public string? name { get; set; }
+        public string? code { get; set; }
+        public string? developer_name { get; set; }
+        public string? model_type { get; set; }
+        public string? stat_group { get; set; }
     }
 }

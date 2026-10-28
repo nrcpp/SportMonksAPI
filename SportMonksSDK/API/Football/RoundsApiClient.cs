@@ -4,7 +4,7 @@ namespace SportMonksSDK.API.Football
 {
     public class RoundsApiClient : BaseApiClient
     {
-        public async Task<AllRoundsResponse?> GetAllRounds(string parametersPart = "includes=sport;league;season;stage;fixtures;")
+        public async Task<AllRoundsResponse?> GetAllRounds(string parametersPart = "include=sport;league;season;stage;fixtures;")
             => await GetAll<AllRoundsResponse, Round>(
                 endpointPart: "football/rounds",
                 parametersPart: parametersPart
@@ -12,7 +12,7 @@ namespace SportMonksSDK.API.Football
         public async Task<RoundResponse?> GetRoundById(string id)
         => await GetSingle<RoundResponse>(
             endpointPart: $"football/rounds/{id}",
-            include: "includes=sport;league;season;stage;fixtures;"
+            include: "include=sport;league;season;stage;fixtures;"
             );
     }
 

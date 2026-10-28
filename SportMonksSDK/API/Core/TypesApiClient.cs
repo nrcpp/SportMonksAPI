@@ -6,11 +6,12 @@
             => await base.GetAll<AllTypesResponse, Entities.Type>(
                 endpointPart: "core/types",
                 parametersPart: parametersPart
-                );
-        public async Task<TypeResponse?> GetTypeById(string typeId, string parametersPart = "filters=populate")
+            );
+        public async Task<TypeResponse?> GetTypeById(int typeId, string parametersPart = "filters=populate")
             => await base.GetSingle<TypeResponse>(
-                endpointPart: $"core/types/{typeId}"
-                );
+                endpointPart: $"core/types/{typeId}",
+                filters: parametersPart
+            );
     }
 
     #region Models

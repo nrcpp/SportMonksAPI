@@ -4,15 +4,15 @@ namespace SportMonksSDK.API.Football
 {
     public class SeasonsApiClient : BaseApiClient
     {
-        public async Task<AllSeasonsResponse?> GetAllSeasons(string parametersPart = "includes=sport;league;teams;stages;fixtures;groups;topscorers;")
+        public async Task<AllSeasonsResponse?> GetAllSeasons(string parametersPart = "include=sport;league;teams;stages;fixtures;groups;topscorers;")
             => await GetAll<AllSeasonsResponse, Season>(
                 endpointPart: "football/seasons",
                 parametersPart: parametersPart
                 );
-        public async Task<SeasonResponse?> GetSeasonById(string id)
+        public async Task<SeasonResponse?> GetSeasonById(string id, string include = "include=sport;league;teams;stages;fixtures;groups;topscorers;")
         => await GetSingle<SeasonResponse>(
             endpointPart: $"football/seasons/{id}",
-            include: "includes=sport;league;teams;stages;fixtures;groups;topscorers;"
+            include: include
             );
     }
 

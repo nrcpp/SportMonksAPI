@@ -6,7 +6,7 @@
             => await base.GetAll<AllTimezonesResponse, string>(
                 endpointPart: "core/timezones",
                 parametersPart: parametersPart
-                );
+            );
     }
 
     public class AllTimezonesResponse : ListResponse<string>
